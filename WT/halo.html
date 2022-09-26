@@ -1,9 +1,49 @@
 <html>
-    <tile> HELLO THERE
-    </tile>
-    <img src="">
-        <audio id="bgmusic" autoplay controls loop>
-            <source src="thissong.mp3" type="audio/mp3" />
-        </audio>
+    <body>
+        
+        <style>
+               .column {
+        float: left;
+        width: 20%;
+        text-align: left;
+        }
+        .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+        </style>
+        <div class="row">
+            <div class="column">
+                <section>
+                <img src="halo.jpg" alt="halo-pics" height="300" width="200">
+            </section>
+            <section>
+                <audio id="bgmusic" autoplay controls loop>
+                    <source src="thissong.mp3" type="audio/mp3" />
+                </audio>
+            </section></div>
+            <div class="column">
+                <div class="haldiv">
+                    <h3 id="header" ><b>Halo 3 game</b></h3>
+                    <p id="halo3" >price $50.00</p>
+                </div>
+            </div>
+          </div>
+          <script>  
+            document.getElementById("header").addEventListener("click",alertmess)
+            function alertmess(){
+                alert("the discount sale is going to end");
+            }
+            document.getElementById("halo3").addEventListener("click", changeColor);
+            function changeColor() {
+                document.getElementById("halo3").style.color = "red";
+                document.getElementById("halo3").style.fontSize = 23;
+            }   
+        
+        </script>
+    
+    </body>
+    
     
 </html>
