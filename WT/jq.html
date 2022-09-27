@@ -1,0 +1,24 @@
+<html>
+    <body>
+    <p id="hello">jquery is nice</p>
+    <script src="C:/Users/srividya/Desktop/jquery-3.6.1.min.js">
+        //$("<b><p>I love jQuery!!!</p></b>").insertBefore("#hello");
+    </script>
+    <script>
+    $(document).ready(function(){
+          $("<b>I love jQuery!!!</b>").insertBefore("#hello")});
+    </script>
+    <hr>
+    <div class="mdiv">
+        <p> this is in mydiv</p>
+    </div>
+    <div class="div1">
+        <p>this is in div1</p>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $(".div1").hide();
+        })
+    </script>
+    </body>
+</html>

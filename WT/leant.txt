@@ -1,0 +1,3 @@
+1.jquery reqiures you link its library with source
+2.ready()once the page(DOM) ready for JScript code to execute
+3.$(')
