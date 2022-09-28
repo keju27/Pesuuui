@@ -1,8 +1,6 @@
 <html>
-    <body>
     <p id="hello">jquery is nice</p>
     <script src="C:/Users/srividya/Desktop/jquery-3.6.1.min.js">
-        //$("<b><p>I love jQuery!!!</p></b>").insertBefore("#hello");
     </script>
     <script>
     $(document).ready(function(){
@@ -20,5 +18,14 @@
             $(".div1").hide();
         })
     </script>
-    </body>
+     <button id="but2">click for author names</button>
+     <div id="div3">444</div>
+    <script>
+        $("#but2").click(function(){
+            $.ajax({url:"assignment_unit2.json",method:"GET"}).done(function(data)
+            { for(i in data){
+            $("#div3").append(data[i].author+"<br>")
+         }
+})
+</script>
 </html>
