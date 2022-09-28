@@ -11,29 +11,64 @@ typedef struct {
     int top2;               // top element position of stack2
 } MyQueue;
 
+void push(int *stk,int *top,int data){
+    (*top)++;
+    stk[*top] = data;
+}
+
+int pop(int *stk,int *top){
+    if(*top==-1) return -1;
+    int temp = stk[*top];
+    (*top)--;
+    return temp;
+}
+
+// check if the queue is empty
+bool empty(MyQueue *q) {
+    if(q->top1==-1) return true;
+    else return false;
+}
 
 // push the element x to the rear end of the queue
-void enqueue(MyQueue *q, int x) {
-
+void enqueue(MyQueue *q, int x) 
+{
+    push(q->stack1,&(q->top1),x);
 }
 
 
 // retrieve and remove the element from the front end of the queue
 int dequeue(MyQueue *q) {
-    
+    if(empty(q)) return -1;
+    while(q->top1!=-1){
+        int data = pop(q->stack1,&(q->top1));
+        push(q->stack2,&(q->top2),data);
+    }
+    int x = pop(q->stack2,&(q->top2));
+    while(q->top2!=-1){
+        int data = pop(q->stack2,&(q->top2));
+        push(q->stack1,&(q->top1),data);
+    }
+return x;
 }
 
 
 // retrieve the element from the front end of the queue
 int peek(MyQueue *q) {
-    
+    if(empty(q)) return -1;
+    while(q->top1!=-1){
+        int data = pop(q->stack1,&(q->top1));
+        push(q->stack2,&(q->top2),data);
+    }
+    int x = q->stack2[q->top2];
+    while(q->top2!=-1){
+        int data = pop(q->stack2,&(q->top2));
+        push(q->stack1,&(q->top1),data);
+    }
+return x;
 }
 
 
-// check if the queue is empty
-bool empty(MyQueue *q) {
-    
-}
+
 
 
 int validate(MyQueue *q, int pops){
@@ -63,7 +98,7 @@ int validate(MyQueue *q, int pops){
 
 int main(){
     MyQueue q;
-    q.top1 = -1;
+	q.top1 = -1;
     q.top2 = -1;
 
     int no_of_operations;

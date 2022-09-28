@@ -7,7 +7,7 @@
 playlist_t* create_playlist() // return a newly created doubly linked list
 {
 	// DO NOT MODIFY!!!
-	playlist_t* playlist = (playlist_t*) malloc(sizeof(playlist));
+	playlist_t* playlist = (playlist_t*) malloc(sizeof(playlist_t));
 	playlist->list = create_list();
 	playlist->num_songs = 0;
 	playlist->last_song = NULL;
