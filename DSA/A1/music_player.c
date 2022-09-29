@@ -207,4 +207,3 @@ void play_song(int song_id)
 	// DO NOT MODIFY!!!
 	printf("Playing: %d\n", song_id);
 }
-
