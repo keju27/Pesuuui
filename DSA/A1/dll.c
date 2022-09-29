@@ -218,4 +218,3 @@ void display_list(list_t* list) // print the linked list by separating each item
 	}
 	printf("\n");
 }
-
