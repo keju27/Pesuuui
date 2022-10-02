@@ -22,10 +22,11 @@
      <div id="div3">444</div>
     <script>
         $("#but2").click(function(){
-            $.ajax({url:"assignment_unit2.json",method:"GET"}).done(function(data)
+            $.ajax({"assignment_unit2.json",method:"GET"}).done(function(data)
             { for(i in data){
             $("#div3").append(data[i].author+"<br>")
          }
 })
+        })
 </script>
 </html>
