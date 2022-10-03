@@ -1,42 +1,48 @@
-#include<stdio.h>
 #include<stdlib.h>
-#include"bst.h" 
+#include<stdio.h>
+#include"bst.h"
 
 void initTree(TREE *pt)
 {
-    pt->root=NULL;
+	pt->root=NULL;
 }
+
 NODE* createNode(int ele)
 {
-    NODE *nn=malloc(sizeof(NODE));
-    nn->info=ele;
-    nn->left=nn->right=NULL;
-    return nn;
+	NODE *newNode=malloc(sizeof(NODE));
+	
+	newNode->info=ele;
+	newNode->left=NULL;
+	newNode->right=NULL;
+	
+	return newNode;
 }
+
 void insertNode(TREE *pt,int ele)
 {
-    NODE *nn=createNode(ele);
-    NODE *p=pt->root;
-    NODE *q=NULL;
-    if(pt->root==NULL)
-    {
-       pt->root=nn;
-    }
-    else
-    {
-       while(p!=NULL)
-       {
-        q=p;
-        if(p->info<nn->info)
-        p=p->left;
-        else
-        p=p->right;
-       }
-       if(nn->info<q->info)
-       q->left=nn;
-       else
-       q->right=nn;
-    }
+	NODE *p=pt->root;
+	NODE *q=NULL;
+	
+	NODE *newNode=createNode(ele);
+	
+	if(pt->root==NULL)
+		pt->root=newNode;
+	else
+	{
+		while(p!=NULL)
+		{
+			q=p;
+		
+			if(newNode->info < p->info)
+				p=p->left;
+			else
+				p=p->right;
+		}
+		if(newNode->info < q->info)
+			q->left=newNode;
+		else
+			q->right=newNode;
+	}	
 }
 
 NODE* insertNodeRec(NODE* p,NODE* newNode)
@@ -50,13 +56,99 @@ NODE* insertNodeRec(NODE* p,NODE* newNode)
 	
 	return p;
 }
-
 void insertRec(TREE *pt,int ele)
 {
 	NODE *newNode=createNode(ele);
 	pt->root=insertNodeRec(pt->root,newNode);
 }
 
+void inorder(NODE *p)
+{
+	if(p!=NULL)
+	{
+		inorder(p->left);
+		printf("%d ",p->info);
+		inorder(p->right);
+	}
+}
+void inorderTraversal(TREE *pt)
+{
+	inorder(pt->root);
+}
+void preorder(NODE *p)
+{
+	if(p!=NULL)
+	{
+		printf("%d ",p->info);
+		preorder(p->left);
+		preorder(p->right);
+	}
+}
+void preorderTraversal(TREE *pt)
+{
+	preorder(pt->root);
+}
+void postorder(NODE *p)
+{
+	if(p!=NULL)
+	{
+		postorder(p->left);
+		postorder(p->right);
+		printf("%d ",p->info);
+	}
+}
+void postorderTraversal(TREE *pt)
+{
+	postorder(pt->root);
+}
+void destroyNode(NODE *p)
+{
+	if(p!=NULL)
+	{
+		destroyNode(p->left);
+		destroyNode(p->right);
+		free(p);
+	}
+}
+void destroyTree(TREE *pt)
+{
+	if(pt->root!=NULL)
+		destroyNode(pt->root);
+	
+	pt->root=NULL;
+}
+
+NODE* searchIterative(TREE *pt,int ele)
+{
+	NODE *p=pt->root;
+	
+	while(p!=NULL)
+	{
+		if(ele == p->info)
+			return p;
+		else if(ele < p->info)
+			p=p->left;
+		else
+			p=p->right;
+	}
+	return NULL;		//return p;
+}
+
+NODE* searchNode(NODE *p,int ele)
+{
+	if(p==NULL)
+		return p;
+	else if(ele == p->info)
+		return p;
+	else if(ele < p->info)
+		return searchNode(p->left,ele);
+	else 
+		return searchNode(p->right,ele);
+}
+NODE* searchRecursive(TREE *pt,int ele)
+{
+	return searchNode(pt->root,ele);
+}
 NODE* delNode(NODE *p,int ele)
 {
 	NODE *q;

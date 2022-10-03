@@ -1,7 +1,8 @@
 typedef struct node
 {
 	int info;
-    struct node *left,*right;
+	struct node *left;
+	struct node *right;
 }NODE;
 
 typedef struct tree
