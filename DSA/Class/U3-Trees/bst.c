@@ -238,6 +238,7 @@ NODE* delNode(NODE *p,int ele)
 		{
 			q=p->right;
 			free(p);
+			inorderTraversal(q);
 			return q;
 		}
 		else if(p->right==NULL)			//single left child

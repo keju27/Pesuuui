@@ -15,6 +15,8 @@ typedef struct node
     struct node* left; //user to the left
 } node;
 
+struct node*deleteFriends(int key, struct node*users);
+void refineFriends(struct node* root, struct node*user);
 struct node* retUser(char str[MAX])
 {
     char name[MAX];
@@ -63,46 +65,216 @@ struct node* retUser(char str[MAX])
 struct node* search(int key, struct node *users)
 {
     //CODE HERE
+    node *p=users;
+	
+	while(p!=NULL)
+	{
+		if(key == p->id)
+			return p;
+		else if(key < p->id)
+			p=p->left;
+		else
+			p=p->right;
+	}
+	return NULL;	
 }
-
-//see document for explanattion
 struct node*refineUser(struct node*user, struct node *users)
 {
-    //CODE HERE
+    while(search(user->id,users)!=NULL)
+    {
+        user->id++;
+    }  
+   node *temp_friend;
+   int tempFriend[MAX];
+   int validFriend=0;
+   int i=0;
+
+    for(i=0; i<user->numfren;i++)
+    {
+
+        temp_friend=search(user->friends[i],users);
+        if(temp_friend!=NULL)
+        {
+            tempFriend[validFriend++]=user->friends[i];
+            temp_friend->friends[temp_friend->numfren++]=user->id;
+        }
+    }  
+    
+    for(i=0;i< user->numfren;i++)
+    {
+        user->friends[i]=-1;
+    }
+    user->numfren=0;
+
+    for(i=0; i<validFriend;i++)   
+    {
+        user->friends[i]= tempFriend[i];
+    }
+    user->numfren=i;
+    return user;
 }
 
 //insert user with id
 struct node* insertUser(struct node*root,int id,struct node*user)
 {
-   //CODE HERE
+    user->right=NULL;
+    user->left=NULL;
+    if (root==NULL) 
+    {
+        root=user; 
+    }
+    if (id > root->id) 
+    {
+        root->right = insertUser(root->right, id,user);
+    }
+    else if (id < root->id)
+    {
+        root->left = insertUser(root->left,id, user);
+    }
+    return root;
 }
 
 //prints friends list
 void friends(int id, struct node *users) 
 {
    //CODE HERE
+   node *user;
+   user=search(id,users);
+   int i=0;
+   for(i=0; i<users->numfren;i++)
+    {
+        printf("%d\n",*(user->friends));
+        user->friends++;
+    }
 }
 
-//find child node with minimum value (inorder successor) - helper to delete node
-struct node *minValueNode(struct node *node) {
-  //CODE HERE
-}
 
+bool inFriendlist(int key,struct node* user)
+{   
+     for(int i=0; i<user->numfren;i++)
+    {
+        if (user->friends[i]==key)
+        {
+            return true;
+        }
+    
+    }
+    return false;
+}
 //deletes itself from its friend's nodes
+
 struct node*deleteFriends(int key, struct node*users)
 {
     //CODE HERE
-}
+    node *root=users;
+    if (users==NULL)
+    {
+        return root;
+    }
+    else if(users!=NULL)
+    {
+        if (users->id==key)
+        {
+            
+        }
+        else
+        {   
+            deleteFriends(key,users->left);
+            deleteFriends(key,users->right);
+            for(int i=0; i<users->numfren;i++)
+            {
+                if(users->friends[i]==key)
+                {
+                    
+                    for(int j=i; j<users->numfren;j++)
+                    {
+                        users->friends[j]=users->friends[j++];
+                    }
+                    users->numfren--;
 
-// Deleting a node
+                }
+                if(users->numfren==0)
+                {
+                    users->friends[0]=-1;
+                }
+            }
+            
+        }
+    
+    }
+    return root;
+        
+}  
+
+//helper function for deletenode
+struct node *delNode(struct node *root, int key)
+{
+    node* q;
+    node *roots=root;
+  if (roots==NULL)
+  {
+    return roots;
+  }
+  else if(key<roots->id)
+    {   
+        roots->left=delNode(roots->left,key);
+    }
+  else if (roots->id<key)  
+  {
+        roots->right=delNode(roots->right,key);
+  }
+  else
+    {  
+        if(roots->left==NULL)
+        {   
+            q=roots->right;
+            free(roots);
+            return q;
+        } 
+        else if(roots->right==NULL)			
+		{
+			q=roots->left;
+			free(roots);
+			return q;
+		}
+		else		
+		{
+			q=roots->right;
+			while(q->left!=NULL)
+				q=q->left;
+			
+			roots->id=q->id;
+            roots->friends=q->friends;
+            roots->name[0]=q->name[0];
+            roots->numfren=q->numfren;
+			roots->right=delNode(roots->right,q->id);
+		}
+	}
+	return roots;
+}
+// Deleting a node Return root of updated tree
 struct node *deleteNode(struct node *root, int key) {
   //CODE HERE
+  struct node* newr=root;
+  if (root!=NULL)
+  newr=delNode(root,key);
+  return newr;
 }
 
 //Print USER's IDs in ascending order
 void printInOrder(node* myusers) 
 {
     //CODE HERE
+    if (myusers==NULL)
+    {
+        return;
+    }
+    else
+    {   
+        printInOrder(myusers->left);
+        printf("%d %s\n",myusers->id,myusers->name);
+        printInOrder(myusers->right);
+    }   
 }
 
 
