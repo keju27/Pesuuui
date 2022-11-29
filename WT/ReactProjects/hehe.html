@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>React</title>
+    <script crossdomain src="https://unpkg.com/react@17.0.2/umd/react.development.js" crossorigin></script>
+
+    <script crossdomain src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js" crossorigin></script>
+
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body style = "background-color: lightblue;">
+    <h1 style = "font-size: 45px">Order summary</h1>
+    <span id="root"></span>
+    <script type = "text/babel">
+        let totalcost = 0
+        let prices = ["90000","80000","75000"]
+        var current = new Date()
+        var todaysdate = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`
+        var deliverydate =  `${current.getDate()+3}/${current.getMonth()+1}/${current.getFullYear()}`
+        var letterStyle = {
+                    display:"inline-block",
+                    marginRight:"30px",
+                    padding:"20px",
+                    border: '1px solid black',
+                    backgroundColor:"skyblue",
+                    fontSize:"20px",
+                            };
+        class Summary extends React.Component
+        {
+            constructor(props)
+            {
+                super(props)
+                this.state = {cost:totalcost}
+            }
+            render()
+            {
+                return (<span><MAC quantity = "0" price = {prices[0]}/>
+                    <DELL quantity = "0" price ={prices[1]} />
+                    <HP quantity = "0" price = {prices[2]}/>  
+                    <h2>Total Cost = {this.state.cost} INR</h2> 
+                    <h3>Order date:{todaysdate}</h3>
+                    <h3>Expected Delivery Date: {deliverydate}</h3>
+                    </span>)
+            }
+            
+            componentDidMount()
+            {
+                setInterval(() => {
+                    this.setState({cost:totalcost})
+                },10)
+            }
+            
+        }
+        class MAC extends React.Component
+        {
+            constructor(props)
+            {
+                super(props);
+                this.state = {quantity:this.props.quantity}
+            }
+            render()
+            {
+                
+                return <span style = {letterStyle}>
+                    <h1>Apple</h1>
+                    <p>Description: Apple MGNH3493</p>
+                        <p> Macbook Air (M1 chip/8GB/</p>
+                         <p>256GB/mac OS)</p>
+                    <p><b>Price: {this.props.price} INR</b></p>
+                    <p>Quantity : {this.state.quantity}</p>
+                    <button onClick = {this.add}>+</button>
+                    </span>
+            }
+            add = () => {
+                this.setState({quantity:(parseInt(this.state.quantity)+1)})
+                totalcost+=parseInt(this.props.price)
+            }
+        }
+        class DELL extends React.Component
+        {
+            constructor(props)
+            {
+                super(props);
+                this.state = {quantity:this.props.quantity}
+            }
+            render()
+            {
+                return <span style = {letterStyle}>
+                    <h1>Dell</h1>
+                    <p>11th Gen Intel Core</p>
+                    <p>i7 - 11390H Processor</p>       
+                    <p>Windows 11 Home</p> 
+                    <p><b>Price: {this.props.price} INR</b></p>
+                    <p>Quantity : {this.state.quantity}</p>
+                    <button onClick = {this.add}>+</button>
+                    </span>
+            }
+            add = () => {
+                this.setState({quantity:(parseInt(this.state.quantity)+1)})
+                totalcost+=parseInt(this.props.price)
+            }
+        }
+        class HP extends React.Component
+        {
+            constructor(props)
+            {
+                super(props);
+                this.state = {quantity:this.props.quantity}
+            }
+            render()
+            {
+                return <span style = {letterStyle}>
+                    <h1>Hp</h1>
+                    <p>12th generation</p>
+                    <p>Intel Core i5 - 11130H</p>
+                    <p>Windows 11 Home</p>
+                    <p><b>Price: {this.props.price} INR</b></p>
+                    <p>Quantity : {this.state.quantity}</p>
+                    <button onClick = {this.add}>+</button>
+                    </span>
+            }
+            add = () => {
+                this.setState({quantity:(parseInt(this.state.quantity)+1)})
+                totalcost+=parseInt(this.props.price)
+            }
+        }
+        ReactDOM.render(<Summary total_cost = "0"/>,document.getElementById("root"))
+    </script>
+    
+</body>
+</html>

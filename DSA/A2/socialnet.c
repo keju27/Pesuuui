@@ -80,6 +80,7 @@ struct node* search(int key, struct node *users)
 }
 struct node*refineUser(struct node*user, struct node *users)
 {
+    //CODE HERE
     while(search(user->id,users)!=NULL)
     {
         user->id++;
@@ -117,6 +118,7 @@ struct node*refineUser(struct node*user, struct node *users)
 //insert user with id
 struct node* insertUser(struct node*root,int id,struct node*user)
 {
+    //CODE HERE
     user->right=NULL;
     user->left=NULL;
     if (root==NULL) 
@@ -149,7 +151,7 @@ void friends(int id, struct node *users)
 }
 
 
-bool inFriendlist(int key,struct node* user)
+bool inFriendlist(int key,struct node* user) //function to check if key is in friends list
 {   
      for(int i=0; i<user->numfren;i++)
     {
@@ -161,8 +163,8 @@ bool inFriendlist(int key,struct node* user)
     }
     return false;
 }
-//deletes itself from its friend's nodes
 
+//deletes itself from its friend's nodes
 struct node*deleteFriends(int key, struct node*users)
 {
     //CODE HERE
@@ -245,7 +247,7 @@ struct node *delNode(struct node *root, int key)
 			
 			roots->id=q->id;
             roots->friends=q->friends;
-            roots->name[0]=q->name[0];
+            strcpy(roots->name,q->name);
             roots->numfren=q->numfren;
 			roots->right=delNode(roots->right,q->id);
 		}

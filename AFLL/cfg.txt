@@ -1,0 +1,6 @@
+A-> X|Lambda
+X->PA|QA
+
+X->starts with < and ends with >
+P->open tag append to end of list
+Q->closed tag check if same as front of list, then pop
